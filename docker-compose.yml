@@ -15,8 +15,6 @@ services:
     environment:
       JOOMLA_DB_HOST: joomladb
       JOOMLA_DB_PASSWORD: p4ssw0rd
-#      VIRTUAL_HOST: tudominio.com
-#      LETSENCRYPT_HOST: tudominio.com
 
   joomladb:
     image: mysql:8.0
@@ -40,32 +38,3 @@ services:
       - "8080:80"
 
 
-##############################################
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - certs:/etc/nginx/certs
-      - vhost.d:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
-      
-  nginx-proxy-letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx-proxy-letsencrypt
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - certs:/etc/nginx/certs
-      - vhost.d:/etc/nginx/vhost.d
-      - ./html:/usr/share/nginx/html
-    environment:
-      - DEFAULT_EMAIL=info@gmail.com
-      - NGINX_PROXY_CONTAINER=nginx-proxy
-
-volumes:
-  certs: {}
-  vhost.d: {}
