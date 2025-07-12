@@ -1,8 +1,4 @@
-# joomla
-Joomla - CMS - Docker-compose
+# Joomla
 
-Ver en "localhost:8200"
-
-PhpMyAdmin ver en "localhost:8080"
-
+Ver en "http://localhost:8200"
 
