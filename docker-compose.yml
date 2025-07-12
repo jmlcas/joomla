@@ -1,37 +1,30 @@
 services:
 
   joomla:
-    image: joomla
-    container_name: joomla    
+    image: joomla:latest
     restart: unless-stopped
-    depends_on:
-      - joomladb
     ports:
       - "8200:80"
-    volumes:
-      - ./html:/var/www/html
     environment:
-      JOOMLA_DB_HOST: joomladb
-      JOOMLA_DB_PASSWORD: p4ssw0rd
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: joomla
+      JOOMLA_DB_PASSWORD: examplepass
+      JOOMLA_DB_NAME: joomla_db
+      JOOMLA_SITE_NAME: Joomla
+      JOOMLA_ADMIN_USER: Admin
+      JOOMLA_ADMIN_USERNAME: admin
+      JOOMLA_ADMIN_PASSWORD: p4ssw0rd-1234
+      JOOMLA_ADMIN_EMAIL: admin@example.com
+    volumes:
+      - ./joomla_data:/var/www/html
 
-  joomladb:
+  db:
     image: mysql:latest
-    container_name: joomladb    
-    expose:
-      - "3306"
     restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: joomla_db
+      MYSQL_USER: joomla
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
-      - ./data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: p4ssw0rd
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: joomlapma 
-    restart: unless-stopped
-    environment:
-      PMA_ARBITRARY: "1"
-    ports:
-      - "8080:80"
-
-
+      - ./db_data:/var/lib/mysql
