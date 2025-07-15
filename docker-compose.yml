@@ -17,7 +17,7 @@ services:
       JOOMLA_DB_PASSWORD: p4ssw0rd
 
   joomladb:
-    image: mysql:latest
+    image: mariadb:latest
     container_name: joomladb    
     expose:
       - "3306"
